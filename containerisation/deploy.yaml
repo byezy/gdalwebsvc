@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: titleTRY
+  labels:
+    app: titleTEST
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: titleX
+  template:
+    metadata:
+      name: titleGDAL
+      labels:
+        app: titleGSVC
+    spec:
+      containers:
+        - name: title
+          image: alpgdal
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+      

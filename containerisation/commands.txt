@@ -1,0 +1,9 @@
+curl -w "\n"  http://127.0.0.1:8081/
+curl -w "\n"  http://127.0.0.1:8081/help
+
+curl -w "\n"  http://127.0.0.1:8082/ping
+curl -w "\n"  http://127.0.0.1:8082/hello
+
+podman build --tag gdalalp .
+podman run -p 8080:8080 -it -p 8081:8081 -p 8082:8082 -v /home/byezy/SpatialData:/data -v /home/byezy/testoutput:/output localhost/gdalalp:latest
+

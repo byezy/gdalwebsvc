@@ -1,0 +1,69 @@
+# build image
+
+FROM docker.io/golang AS builder
+
+WORKDIR /build
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o serviceserver .
+
+# gdal image
+
+FROM ghcr.io/osgeo/gdal:alpine-small-3.9.2 AS gdal
+RUN apk --no-cache add ca-certificates
+
+# deployment image
+FROM gdal
+
+WORKDIR /svc
+COPY --from=builder /build/serviceserver .
+
+CMD [ "/svc/serviceserver" ]
+
+EXPOSE 8080 8081 8082
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# note: never use the :latest tag in a production site
+# FROM docker.io/caddy:2.8.4-alpine
+# FROM ghcr.io/osgeo/gdal:alpine-small-3.9.1 as gdalbase
+#
+# FROM gdalbase as appbase
+# # WORKDIR /app
+# COPY build/ogrsrv /
+#
+# # Make port 80 available to the world outside this container
+# EXPOSE 8080
+
+# RUN /app/ogrsrv
+
+# RUN apk add --no-cache gdal
+# # Use Python as base for Podman Build from Dockerfiles
+# FROM python:3.9
+#
+# # Set the working directory in the container
+
+#
+# # Copy the current directory contents into the container at /app
+# COPY . /app
+#
+# # Install any needed dependencies specified in requirements.txt
+# RUN pip install --no-cache-dir -r requirements.txt
+#
+#
+# # Define environment variable
+# ENV NAME World
+#
+# # Run app.py when the container launches
+# CMD ["python", "app.py"]
+

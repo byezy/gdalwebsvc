@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: titlxxxe
+  labels:
+    role: tizzzztle
+spec:
+  containers:
+    - name: title
+      image: gdalalp:latest
+      imagePullPolicy: IfNotPresent
+      ports:
+        - name: gdl
+          containerPort: 80
+          protocol: TCP
+        - name: ogr
+          containerPort: 81
+          protocol: TCP
+        - name: adm
+          containerPort: 81
+          protocol: TCP
+  restartPolicy: Always
+  
